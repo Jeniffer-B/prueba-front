@@ -1,40 +1,51 @@
 <template>
-    <div>
+    <div class="containerComponent">
         <div class="formBox">
             <div v-if="formIsValid === false">
                 <strong>El formulario tiene algun error!</strong>
             </div>
-           <h3> Información Personal</h3>
-            <form @submit.prevent="savePersonalInfo">
-                <input v-model="email" type="email" required="required" placeholder="Email">
-                <input v-model="name" type="text" minlength="5" required="required" placeholder="Nombre completo">
-                <textarea v-model="message" placeholder="Cuentanos algo sobre tí."></textarea>
-                <input v-model="country" required="required" type="text" placeholder="País">
-                <input v-model="city" required="required" type="text" placeholder="Ciudad">
-                <button type="submit"  value="savePersonalInfo">Guardar</button>
-            </form>
-            <div v-if="formIsValid === true">
-                <form @submit.prevent="saveWorkInfo">
-                    <h3> Información Laboral</h3>
+            <div class="formContainer">
+                <h3> Información Personal</h3>
+                <form @submit.prevent="savePersonalInfo" class="myForm">
+                    <input v-model="email" type="email" required="required" placeholder="Email">
+                    <input v-model="name" type="text" minlength="5" required="required" placeholder="Nombre completo">
+                    <textarea class="textArea" v-model="message" placeholder="Cuéntanos algo sobre tí."></textarea>
+                    <input v-model="country" required="required" type="text" placeholder="País">
+                    <input v-model="city" required="required" type="text" placeholder="Ciudad">
+                    <button type="submit"  value="savePersonalInfo">Guardar</button>
+                </form>
+            </div>
+            <!-- <div v-if="formIsValid === true"> -->
+            <div class="formContainer">
+                <h3> Información Laboral</h3>
+                <form @submit.prevent="saveWorkInfo" class="myForm">
                     <input v-model="experience" required="required" type="number" placeholder="Años de experiencia">
-                    <select v-model="sector" required="required">
+                    <select v-model="sector" required="required" class="SelectInput">
                         <option disabled value="">Seleccione un sector</option>
                         <option>Front</option>
                         <option>Back</option>
                         <option>Mobile</option>
                         <option>Data</option>
                     </select>
-                    <input v-model="skill" type="text"  placeholder="Tus Skills"> <button @click.prevent="addSkills">Añadir skills</button>
-                    <p v-for="skill in skills" :key="skill.id">{{ skill }}</p>
+                    <div class="skillsDiv">
+                        <input v-model="skill" type="text"  placeholder="Tus Skills" class="skills">
+                         <button @click.prevent="addSkills" class="buttonAddSkill">
+                             Add
+                        </button>
+                    </div>
                     <button type="submit" value="saveWorkInfo">Crear perfil</button>
-                </form>
+                </form> 
             </div>
-        </div>
+            <div>
+                <p v-for="skill in skills" :key="skill.id"> # {{ skill }}</p>
+            </div>
+            </div>
+        <!-- </div> -->
     </div>
 </template>
 <script>
 export default {
-    name: 'PersonalInformationForm',
+    name: 'FormNewProfile',
     data(){
         return{
             email: '',
@@ -46,8 +57,8 @@ export default {
             sector: '',
             skills: [],
             skill:'',
+            formTwoIsValid: null,
             formIsValid: null,
-            formTwoIsValid: null
         }
     },
     methods: {
@@ -127,14 +138,99 @@ export default {
             if(this.formIsValid == true && this.formTwoIsValid == true) {
                 console.log('todo true')
                 this.completeNewProfile(profesionalInfo)
-                // this.$router.push('/About')
+                this.$router.push('/Profile')
             }
         },
         completeNewProfile(profesionalInfo) {
             this.$store.dispatch('completeProfile', profesionalInfo)
-        }
-        
-        
+        }   
     }
 }    
 </script>
+<style scoped>
+    .formBox{
+        height:100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #ECECEC;
+    }
+    .formContainer{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        width: 30%;
+        height: auto;
+        padding: 2% 2%;
+        margin: 5% 3%;
+        border-radius: 66px;
+        background: #d5b1af;
+        box-shadow:  20px 20px 66px #b39b9b,
+                    -20px -20px 66px #ffffff;
+    }
+    .myForm ,
+    .myForm div{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    input ,
+    .SelectInput ,
+    .skills {
+        width: 100%;
+        height: 6%;
+        padding: 4% 4%;
+        margin: 4% 4%;
+        border-radius: 2%;
+        border-style: none;
+    }
+    .skillsDiv {
+        display:flex;
+        display: inline;
+    }
+    .skillsDiv div {
+        width: 45%;
+    }
+    .buttonAddSkill{
+        width: 20%;
+        height: 20px;
+    }
+    .textArea{
+        width: 100%;
+        padding: 4% 4%;
+        margin: 4% 4%;
+        height: 10%;
+    }
+    button {
+        background-color: #eee;
+        border: none;
+        font-size: 1rem;
+        width: 80%;
+        height: 50px;
+        margin: 0.5%;
+        border-radius: 1rem;
+        color:#d8918d;
+        box-shadow: 0 0.4rem #dfd9d9;
+        cursor: pointer;
+    }
+  button:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+  }
+
+  button:hover:not(:disabled) {
+    background: #BB7E91;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+  }
+
+  button:disabled {
+    cursor: auto;
+    color: grey;
+  }
+</style>
