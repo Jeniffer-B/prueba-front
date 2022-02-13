@@ -1,9 +1,12 @@
 <template>
-  <div class="profile">
+<div>
+  <MyNav />
+   <div class="profile">
     <h2>Perfil completo</h2>
     <div class="informationContainer">
       <div class="textContainer">
         <h3>Información personal:</h3>
+      <div class="userPicture">{{this.$store.state.newUserProfile.color}}</div>
       <div> <strong>Nombre : {{this.$store.state.newUserProfile.name}}</strong></div>
       <div> <strong>Email : {{this.$store.state.newUserProfile.email}}</strong></div>
       <div> <strong>País : {{this.$store.state.newUserProfile.country}}</strong></div>
@@ -16,10 +19,16 @@
       </div>
     </div>
   </div>
+</div>
+ 
 </template>
 <script>
+import MyNav from '../components/MyNav.vue'
 export default {
   name: 'Profile',
+  components: {
+    MyNav
+  },
   computed: {
     userSkills() {
       if (this.$store.state.newUserProfile.infoWork.skills.length === 0) {
@@ -47,6 +56,10 @@ export default {
     background: #B9D5D9;
     box-shadow:  5px 5px 0px #758689,
                 -5px -5px 0px #fdffff;
+  }
+  .userPicture {
+    border-radius: 50%;
+    min-width: 60px;
   }
   .textContainer{
     padding: 2% 2%;
