@@ -1,10 +1,11 @@
 <template>
     <div class="containerComponent">
+         <MyNav />
         <div class="formBox">
             <div v-if="formIsValid === false">
                 <strong>El formulario tiene algun error!</strong>
             </div>
-            <div class="formContainer">
+            <div class="formContainer" id="hideForm">
                 <h3> Información Personal</h3>
                 <form @submit.prevent="savePersonalInfo" class="myForm">
                     <input v-model="email" type="email" required="required" placeholder="Email">
@@ -40,8 +41,12 @@
     </div>
 </template>
 <script>
+import MyNav from '../components/MyNav.vue'
 export default {
     name: 'FormNewProfile',
+    components: {
+        MyNav
+    },
     data(){
         return{
             email: '',
@@ -75,9 +80,18 @@ export default {
                 this.formIsValid = true
             }
             if(this.formIsValid == true){
+                personalInfo.color = this.getRandomColor()
                 this.createNewUser(personalInfo)
             }
-            console.log(personalInfo);
+            this.hideForm()
+        },
+        hideForm() {
+            var formDiv = document.getElementById('hideForm');
+            if (formDiv.style.display === 'none') {
+                formDiv.style.display = 'block';
+            } else {
+                formDiv.style.display = 'none';
+            }
         },
         validateForm(personalInfo){
             this.validateEmail(personalInfo.email)
@@ -132,16 +146,22 @@ export default {
         },
         completeProfile(profesionalInfo){
             if(this.formIsValid == true && this.formTwoIsValid == true) {
-                console.log('todo true')
                 this.completeNewProfile(profesionalInfo)
                 this.$router.push('/Profile')
             }
         },
         completeNewProfile(profesionalInfo) {
             this.$store.dispatch('completeProfile', profesionalInfo)
-        }   
-    }
-}    
+        },
+        getRandomColor() {
+            let letters = '0123456789ABCDEF'.split('');
+            let color = '#';
+            for (let i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+}  }
 </script>
 <style scoped>
     .formBox{
