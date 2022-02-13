@@ -15,7 +15,6 @@
                     <button type="submit"  value="savePersonalInfo">Guardar</button>
                 </form>
             </div>
-            <!-- <div v-if="formIsValid === true"> -->
             <div class="formContainer">
                 <h3> Información Laboral</h3>
                 <form @submit.prevent="saveWorkInfo" class="myForm">
@@ -27,20 +26,17 @@
                         <option>Mobile</option>
                         <option>Data</option>
                     </select>
-                    <div class="skillsDiv">
-                        <input v-model="skill" type="text"  placeholder="Tus Skills" class="skills">
-                         <button @click.prevent="addSkills" class="buttonAddSkill">
+                    <input v-model="skill" type="text"  placeholder="Tus Skills" class="skills">
+                        <button @click.prevent="addSkills" class="buttonAddSkill">
                              Add
                         </button>
-                    </div>
                     <button type="submit" value="saveWorkInfo">Crear perfil</button>
                 </form> 
             </div>
-            <div>
+           <div class="textInformationNewUser">
                 <p v-for="skill in skills" :key="skill.id"> # {{ skill }}</p>
             </div>
-            </div>
-        <!-- </div> -->
+        </div>
     </div>
 </template>
 <script>
@@ -152,10 +148,19 @@ export default {
         height:100vh;
         width: 100%;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         background-color: #ECECEC;
+    }
+    .textInformationNewUser{
+        width: 20%;
+        height: auto;
+        text-align: initial;
+        border-left: #d8918d 3px solid;
+    }
+    .textInformationNewUser p{
+        padding: 1% 1%;
+        margin: 0.5% 2%;
     }
     .formContainer{
         display: flex;
@@ -171,6 +176,7 @@ export default {
         box-shadow:  20px 20px 66px #b39b9b,
                     -20px -20px 66px #ffffff;
     }
+
     .myForm ,
     .myForm div{
         width: 80%;
@@ -179,8 +185,7 @@ export default {
         align-items: center;
     }
     input ,
-    .SelectInput ,
-    .skills {
+    .SelectInput {
         width: 100%;
         height: 6%;
         padding: 4% 4%;
@@ -188,16 +193,10 @@ export default {
         border-radius: 2%;
         border-style: none;
     }
-    .skillsDiv {
-        display:flex;
-        display: inline;
-    }
-    .skillsDiv div {
-        width: 45%;
-    }
     .buttonAddSkill{
         width: 20%;
         height: 20px;
+        margin: 3% 3%;
     }
     .textArea{
         width: 100%;
@@ -211,7 +210,7 @@ export default {
         font-size: 1rem;
         width: 80%;
         height: 50px;
-        margin: 0.5%;
+        margin: 2%;
         border-radius: 1rem;
         color:#d8918d;
         box-shadow: 0 0.4rem #dfd9d9;
@@ -232,5 +231,36 @@ export default {
   button:disabled {
     cursor: auto;
     color: grey;
+  }
+  @media (max-width: 800px) {
+    .formBox{
+      flex-direction: column;
+    }
+    .textInformationNewUser{
+    width: 90%;
+    height: auto;
+    font-size: 1em;
+    border-bottom: #d8918d 3px solid;
+  }
+  .textInformationNewUser p{
+    padding: 2% 2%;
+    margin: 1% 1%;
+    text-align: justify;
+  }
+  .formContainer{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 4% 2%;
+  }
+  input{
+    width: 100%;
+    height: 40px;
+    padding: 2% 2%;
+    margin: 2% 2%;
+  }
+  button {
+    height: 30px;
+  }
   }
 </style>
