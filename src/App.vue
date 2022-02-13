@@ -1,23 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <FormNewProfile />
     </div>
     <router-view/>
   </div>
 </template>
-<script>
-import FormNewProfile from '@/components/FormNewProfile.vue'
-
-export default {
-  name: 'Home',
-  components: {
-    FormNewProfile
-  }
-}
-</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
